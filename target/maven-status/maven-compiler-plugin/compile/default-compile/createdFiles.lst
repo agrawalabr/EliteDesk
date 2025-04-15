@@ -1,7 +1,12 @@
 com/example/springbackend/dto/SpaceRequest.class
+com/example/springbackend/dto/UserRequest.class
 com/example/springbackend/repository/UserRepository.class
+com/example/springbackend/service/ReservationService.class
 com/example/springbackend/controller/HealthController.class
+com/example/springbackend/controller/ReservationController.class
+com/example/springbackend/service/UserService.class
 com/example/springbackend/repository/SpaceRepository.class
+com/example/springbackend/controller/UserController.class
 com/example/springbackend/repository/ReservationRepository.class
 com/example/springbackend/model/Role.class
 com/example/springbackend/model/ReservationStatus.class
@@ -9,6 +14,8 @@ com/example/springbackend/SpringBackendApplication.class
 com/example/springbackend/model/User.class
 com/example/springbackend/model/Reservation.class
 com/example/springbackend/service/SpaceService.class
+com/example/springbackend/dto/SpaceResponse.class
 com/example/springbackend/model/SpaceType.class
+com/example/springbackend/dto/ReservationRequest.class
 com/example/springbackend/controller/SpaceController.class
 com/example/springbackend/model/Space.class
