@@ -2,14 +2,17 @@
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/model/Reservation.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/security/JwtAuthenticationFilter.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/SpringBackendApplication.java
+/Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/TimeSlot.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/ApiResponse.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/LoginResponse.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/security/CustomUserDetails.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/ReservationRequest.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/service/UserService.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/security/SecurityConfig.java
+/Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/ReservationEmailRequest.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/model/Role.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/security/JwtService.java
+/Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/AvailabilityRequest.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/repository/SpaceRepository.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/controller/UserController.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/UserRequest.java
@@ -18,6 +21,7 @@
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/LoginRequest.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/controller/ReservationController.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/model/ReservationStatus.java
+/Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/ReservationResponse.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/model/User.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/service/ReservationService.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/service/SpaceService.java

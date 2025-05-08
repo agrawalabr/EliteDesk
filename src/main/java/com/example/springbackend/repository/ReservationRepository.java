@@ -20,9 +20,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
         List<Reservation> findByStatus(ReservationStatus status);
 
         @Query("SELECT r FROM Reservation r WHERE r.space.id = :spaceId " +
-                        "AND ((r.startTime BETWEEN :start AND :end) " +
-                        "OR (r.endTime BETWEEN :start AND :end) " +
-                        "OR (:start BETWEEN r.startTime AND r.endTime))")
+                        "AND ((:start < r.endTime) AND (:end > r.startTime))")
         List<Reservation> findOverlappingReservations(
                         @Param("spaceId") Long spaceId,
                         @Param("start") LocalDateTime start,

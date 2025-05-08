@@ -3,6 +3,7 @@ package com.example.springbackend.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -30,7 +31,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/spaces").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/spaces/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/spaces").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/spaces/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/spaces/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/reservations/space/**").permitAll()
+                        .requestMatchers("/api/reservations/user/**").authenticated()
+                        .requestMatchers("/api/reservations/availability").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
