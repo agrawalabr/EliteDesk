@@ -1,6 +1,7 @@
 package com.example.springbackend.controller;
 
 import com.example.springbackend.dto.ApiResponse;
+import com.example.springbackend.dto.CategorizedReservationsResponse;
 import com.example.springbackend.dto.ReservationEmailRequest;
 import com.example.springbackend.dto.ReservationRequest;
 import com.example.springbackend.dto.ReservationResponse;
@@ -56,6 +57,14 @@ public class ReservationController {
                 .body(ApiResponse.success(reservation, "Reservation created successfully"));
     }
 
+    @PostMapping("/{id}/cancel")
+    public ResponseEntity<ApiResponse<ReservationResponse>> cancelReservation(
+            @PathVariable Long id,
+            @RequestParam String userEmail) {
+        ReservationResponse cancelledReservation = reservationService.cancelReservation(id, userEmail);
+        return ResponseEntity.ok(ApiResponse.success(cancelledReservation, "Reservation cancelled successfully"));
+    }
+
     @GetMapping("/space/{spaceId}")
     public ResponseEntity<ApiResponse<List<ReservationResponse>>> getReservationsBySpaceId(@PathVariable Long spaceId) {
         List<ReservationResponse> reservations = reservationService.getReservationsBySpaceId(spaceId);
@@ -63,8 +72,9 @@ public class ReservationController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<ReservationResponse>>> getReservationsByUserId(@PathVariable Long userId) {
-        List<ReservationResponse> reservations = reservationService.getReservationsByUserId(userId);
+    public ResponseEntity<ApiResponse<CategorizedReservationsResponse>> getReservationsByUserId(
+            @PathVariable Long userId) {
+        CategorizedReservationsResponse reservations = reservationService.getCategorizedReservationsByUserId(userId);
         return ResponseEntity.ok(ApiResponse.success(reservations, "User reservations retrieved successfully"));
     }
 
@@ -72,6 +82,13 @@ public class ReservationController {
     public ResponseEntity<ApiResponse<List<ReservationResponse>>> getReservationsByUserEmail(
             @PathVariable String email) {
         List<ReservationResponse> reservations = reservationService.getReservationsByUserEmail(email);
+        return ResponseEntity.ok(ApiResponse.success(reservations, "User reservations retrieved successfully"));
+    }
+
+    @GetMapping("/user/email/{email}/categorized")
+    public ResponseEntity<ApiResponse<CategorizedReservationsResponse>> getCategorizedReservationsByUserEmail(
+            @PathVariable String email) {
+        CategorizedReservationsResponse reservations = reservationService.getCategorizedReservationsByUserEmail(email);
         return ResponseEntity.ok(ApiResponse.success(reservations, "User reservations retrieved successfully"));
     }
 

@@ -28,6 +28,7 @@
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/repository/UserRepository.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/model/Space.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/exception/UserException.java
+/Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/dto/CategorizedReservationsResponse.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/exception/GlobalExceptionHandler.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/controller/HealthController.java
 /Users/maneeshkolli/Desktop/NYU/SEM2/Java/project/src/main/java/com/example/springbackend/model/SpaceType.java

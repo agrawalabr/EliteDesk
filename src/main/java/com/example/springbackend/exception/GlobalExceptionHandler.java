@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body(ApiResponse.error(null,
-                        "You don't have permission to perform this action. Admin privileges required."));
+                        "You don't have permission to perform this action."));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

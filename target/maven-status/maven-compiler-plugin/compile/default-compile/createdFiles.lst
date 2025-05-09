@@ -4,6 +4,7 @@ com/example/springbackend/repository/UserRepository.class
 com/example/springbackend/service/ReservationService.class
 com/example/springbackend/service/UserService.class
 com/example/springbackend/exception/GlobalExceptionHandler.class
+com/example/springbackend/dto/CategorizedReservationsResponse.class
 com/example/springbackend/model/Role.class
 com/example/springbackend/model/ReservationStatus.class
 com/example/springbackend/model/User.class

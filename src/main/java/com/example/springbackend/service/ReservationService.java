@@ -5,6 +5,7 @@ import com.example.springbackend.dto.ReservationRequest;
 import com.example.springbackend.dto.ReservationResponse;
 import com.example.springbackend.dto.TimeSlot;
 import com.example.springbackend.dto.AvailabilityRequest;
+import com.example.springbackend.dto.CategorizedReservationsResponse;
 import com.example.springbackend.model.Reservation;
 import com.example.springbackend.model.ReservationStatus;
 import com.example.springbackend.model.Space;
@@ -191,6 +192,28 @@ public class ReservationService {
                                 .collect(Collectors.toList());
         }
 
+        public CategorizedReservationsResponse getCategorizedReservationsByUserId(Long userId) {
+                // Validate that the user exists
+                if (!userRepository.existsById(userId)) {
+                        throw new EntityNotFoundException("User not found");
+                }
+
+                List<Reservation> allReservations = reservationRepository.findByUserId(userId);
+                LocalDateTime now = LocalDateTime.now();
+
+                List<ReservationResponse> upcomingReservations = allReservations.stream()
+                                .filter(r -> r.getEndTime().isAfter(now))
+                                .map(this::mapToReservationResponse)
+                                .collect(Collectors.toList());
+
+                List<ReservationResponse> pastReservations = allReservations.stream()
+                                .filter(r -> r.getEndTime().isBefore(now) || r.getEndTime().isEqual(now))
+                                .map(this::mapToReservationResponse)
+                                .collect(Collectors.toList());
+
+                return new CategorizedReservationsResponse(upcomingReservations, pastReservations);
+        }
+
         public List<ReservationResponse> getReservationsByUserEmail(String email) {
                 // Find user by email
                 User user = userRepository.findByEmail(email)
@@ -209,6 +232,94 @@ public class ReservationService {
                                                 reservation.getEndTime(),
                                                 reservation.getStatus()))
                                 .collect(Collectors.toList());
+        }
+
+        public CategorizedReservationsResponse getCategorizedReservationsByUserEmail(String email) {
+                // Find user by email
+                User user = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email));
+
+                List<Reservation> allReservations = reservationRepository.findByUserId(user.getId());
+                LocalDateTime now = LocalDateTime.now();
+
+                List<ReservationResponse> upcomingReservations = allReservations.stream()
+                                .filter(r -> r.getEndTime().isAfter(now))
+                                .map(this::mapToReservationResponse)
+                                .collect(Collectors.toList());
+
+                List<ReservationResponse> pastReservations = allReservations.stream()
+                                .filter(r -> r.getEndTime().isBefore(now) || r.getEndTime().isEqual(now))
+                                .map(this::mapToReservationResponse)
+                                .collect(Collectors.toList());
+
+                return new CategorizedReservationsResponse(upcomingReservations, pastReservations);
+        }
+
+        private ReservationResponse mapToReservationResponse(Reservation reservation) {
+                return new ReservationResponse(
+                                reservation.getId(),
+                                reservation.getUser().getId(),
+                                reservation.getUser().getName(),
+                                reservation.getSpace().getId(),
+                                reservation.getSpace().getName(),
+                                reservation.getSpace().getLocation(),
+                                reservation.getSpace().getType(),
+                                reservation.getStartTime(),
+                                reservation.getEndTime(),
+                                reservation.getStatus());
+        }
+
+        @Transactional
+        public ReservationResponse cancelReservation(Long reservationId, String userEmail) {
+                log.info("Cancelling reservation with ID: {} by user: {}", reservationId, userEmail);
+
+                // Find the reservation
+                Reservation reservation = reservationRepository.findById(reservationId)
+                                .orElseThrow(() -> new EntityNotFoundException(
+                                                "Reservation not found with ID: " + reservationId));
+
+                // Find user by email
+                User user = userRepository.findByEmail(userEmail)
+                                .orElseThrow(() -> new EntityNotFoundException(
+                                                "User not found with email: " + userEmail));
+
+                // Check if the user is the owner of the reservation
+                if (!reservation.getUser().getId().equals(user.getId())) {
+                        log.warn("User {} attempted to cancel reservation {} that belongs to user {}",
+                                        user.getId(), reservationId, reservation.getUser().getId());
+                        throw new IllegalStateException("You can only cancel your own reservations");
+                }
+
+                // Check if the reservation can be cancelled (not in the past and not already
+                // cancelled)
+                LocalDateTime now = LocalDateTime.now();
+                if (reservation.getStartTime().isBefore(now)) {
+                        throw new IllegalStateException(
+                                        "Cannot cancel a reservation that has already started or ended");
+                }
+
+                if (reservation.getStatus() == ReservationStatus.CANCELLED) {
+                        throw new IllegalStateException("This reservation is already cancelled");
+                }
+
+                // Update the reservation status
+                reservation.setStatus(ReservationStatus.CANCELLED);
+                reservation = reservationRepository.save(reservation);
+
+                log.info("Successfully cancelled reservation with ID: {}", reservationId);
+
+                // Return the updated reservation
+                return new ReservationResponse(
+                                reservation.getId(),
+                                reservation.getUser().getId(),
+                                reservation.getUser().getName(),
+                                reservation.getSpace().getId(),
+                                reservation.getSpace().getName(),
+                                reservation.getSpace().getLocation(),
+                                reservation.getSpace().getType(),
+                                reservation.getStartTime(),
+                                reservation.getEndTime(),
+                                reservation.getStatus());
         }
 
         public List<TimeSlot> getAvailableTimeSlots(AvailabilityRequest request) {
